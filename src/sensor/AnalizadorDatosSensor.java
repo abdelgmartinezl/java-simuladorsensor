@@ -1,6 +1,7 @@
 package sensor;
 
-import java.util.Random;
+//import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class AnalizadorDatosSensor {
 
@@ -12,9 +13,11 @@ public class AnalizadorDatosSensor {
         double[] lecturaSensor = new double[NUM_LECTURAS];
         double[][] dataSensor = new double[NUM_LECTURAS][2];
 
-        Random rand = new Random();
+        //Random rand = new Random();
+        RandomGenerator rand = RandomGenerator.of("L128X256MixRandom");
         for (int i = 0; i < NUM_LECTURAS; i++) {
-            double lectura = SENSOR_VALOR_MIN + (SENSOR_VALOR_MAX - SENSOR_VALOR_MIN) * rand.nextDouble();
+            //double lectura = SENSOR_VALOR_MIN + (SENSOR_VALOR_MAX - SENSOR_VALOR_MIN) * rand.nextDouble();
+            double lectura = rand.nextDouble(SENSOR_VALOR_MIN, SENSOR_VALOR_MAX);
             lecturaSensor[i] =  lectura;
             dataSensor[i][0] = lectura;
             dataSensor[i][1] = System.currentTimeMillis();
@@ -31,6 +34,12 @@ public class AnalizadorDatosSensor {
 
         String estadoSensor = (promedioLectura < 50) ? "Normal" : "Anormal";
         System.out.println("Estado del Sensor: " + estadoSensor);
+
+        System.out.println("\nLecturas del Sensor:");
+        System.out.println("Nombre\t\tValor\tTimestamp");
+        for (int i = 0; i < NUM_LECTURAS; i++) {
+            System.out.printf("Lectura%d\t%.2f\t%d%n", i+1, dataSensor[i][0], (long) dataSensor[i][1]);
+        }
     }
 
 }
