@@ -9,18 +9,20 @@ public class AnalizadorDatosSensor {
         final int SENSOR_VALOR_MIN = 0;
         final int SENSOR_VALOR_MAX = 100;
         final int NUM_LECTURAS = 100;
+        final long INTERVALO_TIEMPO = 3000;
 
         double[] lecturaSensor = new double[NUM_LECTURAS];
         double[][] dataSensor = new double[NUM_LECTURAS][2];
 
         //Random rand = new Random();
         RandomGenerator rand = RandomGenerator.of("L128X256MixRandom");
+        long tiempoActual = System.currentTimeMillis();
         for (int i = 0; i < NUM_LECTURAS; i++) {
             //double lectura = SENSOR_VALOR_MIN + (SENSOR_VALOR_MAX - SENSOR_VALOR_MIN) * rand.nextDouble();
             double lectura = rand.nextDouble(SENSOR_VALOR_MIN, SENSOR_VALOR_MAX);
             lecturaSensor[i] =  lectura;
             dataSensor[i][0] = lectura;
-            dataSensor[i][1] = System.currentTimeMillis();
+            dataSensor[i][1] = tiempoActual + i * INTERVALO_TIEMPO;
         }
 
         double suma = 0;
